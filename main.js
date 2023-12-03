@@ -51,9 +51,8 @@ function addHouseLinksEventListeners(data) {
         link.addEventListener("click", (event) => {
             event.preventDefault();
             const slug = link.getAttribute("href").slice(1);
-            console.log(slug);
             const house = data.find((house) => house.slug === slug);
-            console.log(house);
+
             const personList = document.querySelector("#persons");
             personList.innerHTML = `
             <h2 class="house-name-person">Persons</h2>
@@ -70,6 +69,7 @@ function addHouseLinksEventListeners(data) {
                     .join("")}
             </ul>
             `;
+
             displayPersons(house);
         });
     });
@@ -117,9 +117,57 @@ function fetchAndDisplayPersons() {
         });
 }
 
-// ----------------- 
+// ----------------------
+// Display Person Details
+// ----------------------
+
+function displayPersonDetails(person) {
+    fetch(personUrl)
+        .then((response) => response.json())
+        .then((data) => {
+            const personQuotes = data.filter(
+                (quote) => quote.slug === person.slug
+            );
+            console.log("Person Quotes", personQuotes[0].quotes);
+
+            // Display the person details
+
+            const personDetails = document.querySelector("#person-details");
+            personDetails.innerHTML = `
+                    <div class="person-details-container">
+                        <h2 class="person-details-name">${person.name}</h2>
+                        <article>
+                            <img src="./img/characters/${person.slug
+                }.jpg" alt="">
+                            <div class="person-quotes">
+                                <h3>Quotes</h3>
+                                <ul>
+                                    ${personQuotes[0].quotes
+                    .map(
+                        (quote) =>
+                            `<li><i class="fa-solid fa-quote-left"></i>${quote}</li>`
+                    )
+                    .join("")}
+                                </ul>
+                            </div>
+                        </article>
+                    </div>
+            `;
+        })
+        .catch((error) => {
+            console.error(error);
+        });
+
+    // Scroll until persons section
+    const personDetailsName = document.querySelector("#person-details");
+    personDetailsName.scrollIntoView({
+        behavior: "smooth",
+    });
+}
+
+// -----------------
 // Create Person Item
-// ----------------- 
+// -----------------
 
 function createPersonItem(person) {
     const personItem = document.createElement("div");
@@ -134,8 +182,8 @@ function createPersonItem(person) {
     return personItem;
 }
 
-// ----------------- 
-//  Display Quotes 
+// -----------------
+//  Display Quotes
 // -----------------
 
 function fetchAndDisplayQuotes() {
@@ -168,64 +216,21 @@ function createQuoteItem(quote) {
     return quoteItem;
 }
 
+// ---------------------
+// Display Random Quotes
+// ---------------------
+
 function displayRandomQuotes() {
-    fetchAndDisplayQuotes()
+    fetchAndDisplayQuotes();
 }
 
 const btnRandom = document.querySelector("#btn-random");
 
 btnRandom.addEventListener("click", displayRandomQuotes);
 
-// ----------------------
-// Display Person Details 
-// ----------------------
-
-function displayPersonDetails(person) {
-    fetch(personUrl)
-        .then((response) => response.json())
-        .then((data) => {
-            const personQuotes = data.filter(
-                (quote) => quote.slug === person.slug
-            );
-            console.log("Person Quotes", personQuotes[0].quotes);
-
-            // Display the person details
-
-            const personDetails = document.querySelector("#person-details");
-            personDetails.innerHTML = `
-                    <div class="person-details-container">
-                        <h2 class="person-details-name">${person.name}</h2>
-                        <article>
-                            <img src="./img/characters/${
-                                person.slug
-                            }.jpg" alt="">
-                            <div class="person-quotes">
-                                <h3>Quotes</h3>
-                                <ul>
-                                    ${personQuotes[0].quotes
-                                        .map(
-                                            (quote) =>
-                                                `<li><i class="fa-solid fa-quote-left"></i>${quote}</li>`
-                                        )
-                                        .join("")}
-                                </ul>
-                            </div>
-                        </article>
-                    </div>
-            `;
-        })
-        .catch((error) => {
-            console.error(error);
-        });
-
-    // Scroll until persons section
-    const personDetailsName = document.querySelector(".person-details-name");
-    personDetailsName.scrollIntoView({
-        behavior: "smooth",
-    });
-}
-
 // Initial function calls
 fetchAndDisplayHouses();
 fetchAndDisplayPersons();
 fetchAndDisplayQuotes();
+
+
