@@ -1,6 +1,6 @@
 const houseUrl = "https://api.gameofthronesquotes.xyz/v1/houses";
 const personUrl = "https://api.gameofthronesquotes.xyz/v1/characters";
-const quoteUrl = "https://api.gameofthronesquotes.xyz/v1/quotes";
+const quoteUrl = "https://api.gameofthronesquotes.xyz/v1/random/5";
 const authorUrl = "https://api.gameofthronesquotes.xyz/v1/authors";
 
 // Function to fetch and display houses
@@ -41,6 +41,22 @@ function addHouseLinksEventListeners(data) {
             console.log(slug);
             const house = data.find((house) => house.slug === slug);
             console.log(house);
+            const personList = document.querySelector("#persons");
+            personList.innerHTML = `
+            <h2 class="house-name-person">Persons</h2>
+            <h3 class="house-name">${house.name}</h3>
+            <ul class="house-person">
+                ${house.members
+                    .map(
+                        (member) => `
+                            <li style="background-image: url(./img/characters/${member.slug}.jpg);">
+                                <a href="#${member.slug}">${member.name}</a>
+                            </li>
+                        `
+                    )
+                    .join("")}
+            </ul>
+            `;
             displayPersons(house);
         });
     });
@@ -48,25 +64,6 @@ function addHouseLinksEventListeners(data) {
 
 // Function to fetch and display persons
 function displayPersons(house) {
-    const personList = document.querySelector("#persons");
-    personList.innerHTML = `
-        <h2 class="house-name-person">Persons</h2>
-        <h3 class="house-name">${house.name}</h3>
-        <ul class="house-person">
-            ${house.members
-                .map(
-                    (member) => `
-                        <li style="background-image: url(./img/characters/${member.slug}.jpg);">
-                            <a href="#${member.slug}">${member.name}</a>
-                        </li>
-                    `
-                )
-                .join("")}
-        </ul>
-        `;
-
-    // Add event listeners to person links
-
     const personLinks = document.querySelectorAll("#persons ul li a");
     personLinks.forEach((link) => {
         link.addEventListener("click", (event) => {
@@ -87,26 +84,36 @@ function displayPersons(house) {
 }
 
 // Function to fetch and display persons
-// function fetchAndDisplayPersons() {
-//     fetch(personUrl)
-//         .then((response) => response.json())
-//         .then((data) => {
-//             // console.log(data);
-//             const personList = document.querySelector("#persons ul");
+function fetchAndDisplayPersons() {
+    fetch(personUrl)
+        .then((response) => response.json())
+        .then((data) => {
+            // console.log(data);
+            const personList = document.querySelector("#all-characters");
 
-//             data.forEach((person) => {
-//                 const personItem = createPersonItem(person);
-//                 personList.appendChild(personItem);
-//             });
-//         });
-// }
+            data.forEach((person) => {
+                const personItem = createPersonItem(person);
+                personList.appendChild(personItem);
+            });
+        });
+}
 
 // Function to create a person item
 function createPersonItem(person) {
-    const personItem = document.createElement("li");
-    personItem.innerHTML = `<a href="#${person.slug}">${person.name}</a>`;
+    const personItem = document.createElement("div");
+    personItem.innerHTML = `
+        <ul>
+            <li style="background-image: url(./img/characters/${person.slug}.jpg)">
+                <a href="#${person.slug}" >
+                    ${person.name}
+                </a>
+            </li>
+        </ul>`;
     return personItem;
 }
+// Add event listeners to All Characters links
+
+
 
 // Function to fetch and display quotes
 function fetchAndDisplayQuotes() {
@@ -114,7 +121,7 @@ function fetchAndDisplayQuotes() {
         .then((response) => response.json())
         .then((data) => {
             console.log(data);
-            const quoteList = document.querySelector("#quotes ul");
+            const quoteList = document.querySelector("#quotes");
 
             data.forEach((quote) => {
                 const quoteItem = createQuoteItem(quote);
@@ -125,8 +132,14 @@ function fetchAndDisplayQuotes() {
 
 // Function to create a quote item
 function createQuoteItem(quote) {
-    const quoteItem = document.createElement("li");
-    quoteItem.innerHTML = `<a href="#${quote.slug}">${quote.name}</a>`;
+    const quoteItem = document.createElement("div");
+    quoteItem.innerHTML = `
+        <ul>
+            <li>
+                <h4>${quote.character.name}</h4>
+                <p><i class="fa-solid fa-quote-left"></i>${quote.sentence}<i class="fa-solid fa-quote-right"></i></p>
+            </li>
+        </ul>`
     return quoteItem;
 }
 
@@ -157,7 +170,10 @@ function displayPersonDetails(person) {
                                 <h3>Quotes</h3>
                                 <ul>
                                     ${personQuotes[0].quotes
-                                        .map((quote) => `<li>* ${quote}</li>`)
+                                        .map(
+                                            (quote) =>
+                                                `<li><i class="fa-solid fa-quote-left"></i>${quote}</li>`
+                                        )
                                         .join("")}
                                 </ul>
                             </div>
