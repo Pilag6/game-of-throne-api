@@ -130,7 +130,6 @@ function addPersonLinksEventListeners(data) {
     });
 }
 
-
 // -----------------
 // Display Persons
 // -----------------
@@ -155,7 +154,6 @@ function displayPersons(house) {
     });
 }
 
-
 // ----------------------
 // Display Person Details
 // ----------------------
@@ -172,26 +170,48 @@ function displayPersonDetails(person) {
             // Display the person details
 
             const personDetails = document.querySelector("#person-details");
+
             personDetails.innerHTML = `
                     <div class="person-details-container">
                         <h2 class="person-details-name">${person.name}</h2>
                         <article>
-                            <img src="./img/characters/${person.slug
-                }.jpg" alt="">
+                            <img src="./img/characters/${
+                                person.slug
+                            }.jpg" alt="">
                             <div class="person-quotes">
                                 <h3>Quotes</h3>
                                 <ul>
-                                    ${personQuotes[0].quotes
-                    .map(
-                        (quote) =>
-                            `<li><i class="fa-solid fa-quote-left"></i>${quote}</li>`
-                    )
-                    .join("")}
+                                <i class="fa-solid fa-quote-left"></i>${
+                                    personQuotes[0].quotes[
+                                        Math.floor(
+                                            Math.random() *
+                                                personQuotes[0].quotes.length
+                                        )
+                                    ]
+                                }
+                                    <i class="fa-solid fa-quote-right"></i>
+                                    
                                 </ul>
+                                <button class="btn-other-quotes">Other Quotes <i class="fa-solid fa-chevron-right"></i></button>
                             </div>
                         </article>
                     </div>
             `;
+
+            // Add event listener to the button
+            const btnOtherQuotes = document.querySelector(".btn-other-quotes");
+            btnOtherQuotes.addEventListener("click", () => {
+                const personDetails =
+                    document.querySelector(".person-quotes ul");
+                personDetails.innerHTML = `
+            <i class="fa-solid fa-quote-left"></i>${
+                personQuotes[0].quotes[
+                    Math.floor(Math.random() * personQuotes[0].quotes.length)
+                ]
+            }
+            <i class="fa-solid fa-quote-right"></i>
+        `;
+            });
         })
         .catch((error) => {
             console.error(error);
@@ -203,7 +223,6 @@ function displayPersonDetails(person) {
         behavior: "smooth",
     });
 }
-
 
 // -----------------
 //  Display Quotes
@@ -255,5 +274,3 @@ btnRandom.addEventListener("click", displayRandomQuotes);
 fetchAndDisplayHouses();
 fetchAndDisplayPersons();
 fetchAndDisplayQuotes();
-
-

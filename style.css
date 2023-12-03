@@ -28,6 +28,27 @@ img {
     display: block;
 }
 
+html::-webkit-scrollbar {
+    width: 0.9rem;
+}
+
+html::-webkit-scrollbar-track {
+    background: #fff;
+}
+
+html::-webkit-scrollbar-thumb {
+    background-image: linear-gradient(
+        to left bottom,
+        #242e0c,
+        #28340c,
+        #2b3a0b,
+        #2f400a,
+        #334609
+    );
+    border-radius: 2px;
+    box-shadow: 2px 2px 5px 2px rgba(0, 0, 0, 0.555);
+}
+
 header {
     background-color: #000;
     position: sticky;
@@ -442,6 +463,39 @@ main {
                         font-size: 1.5rem;
                         margin-right: 10px;
                     }
+
+                    & .fa-quote-right {
+                        font-size: 1.5rem;
+                        margin-left: 10px;
+                    }
+                }
+
+                & button {
+                    color: #fff;
+                    font-size: 1rem;
+                    font-weight: 500;
+                    text-align: center;
+                    text-transform: uppercase;
+                    border: 1px solid #fff;
+                    background-image: linear-gradient(
+                        to left bottom,
+                        #242e0cc7,
+                        #28340cc5,
+                        #2b3a0bc6,
+                        #2f400ac4,
+                        #334609c5
+                    );
+                    padding: 10px 20px;
+                    transform: translateY(100%);
+                    margin: 0 auto;
+                    margin-bottom: 70px;
+                    cursor: pointer;
+                    transition: all 0.4s ease-in-out;
+
+                    &:hover {
+                        background: #fff;
+                        color: #000;
+                    }
                 }
             }
         }
@@ -546,6 +600,15 @@ footer {
         #persons {
             & .house-name {
                 font-size: 1rem;
+            }
+        }
+    }
+
+    footer {
+        & p {
+            & a {
+                display: block;
+                margin-top: 10px;
             }
         }
     }
