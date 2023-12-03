@@ -1,9 +1,16 @@
+// ---------
+// API URLS
+// ---------
+
 const houseUrl = "https://api.gameofthronesquotes.xyz/v1/houses";
 const personUrl = "https://api.gameofthronesquotes.xyz/v1/characters";
 const quoteUrl = "https://api.gameofthronesquotes.xyz/v1/random/5";
 const authorUrl = "https://api.gameofthronesquotes.xyz/v1/authors";
 
-// Function to fetch and display houses
+// ------------------------
+// Fetch and Display Houses
+// ------------------------
+
 function fetchAndDisplayHouses() {
     fetch(houseUrl)
         .then((response) => response.json())
@@ -20,7 +27,10 @@ function fetchAndDisplayHouses() {
         });
 }
 
-// Function to create a house item
+// -----------------
+// Create House Item
+// -----------------
+
 function createHouseItem(house) {
     const houseItem = document.createElement("li");
     houseItem.innerHTML = `
@@ -31,7 +41,10 @@ function createHouseItem(house) {
     return houseItem;
 }
 
-// Function to add event listeners to house links
+// ----------------------------------
+// Add Event Listeners to House Links
+// ----------------------------------
+
 function addHouseLinksEventListeners(data) {
     const houseLinks = document.querySelectorAll("#houses ul li a");
     houseLinks.forEach((link) => {
@@ -62,7 +75,10 @@ function addHouseLinksEventListeners(data) {
     });
 }
 
-// Function to fetch and display persons
+// -----------------
+// Display Persons
+// -----------------
+
 function displayPersons(house) {
     const personLinks = document.querySelectorAll("#persons ul li a");
     personLinks.forEach((link) => {
@@ -83,7 +99,10 @@ function displayPersons(house) {
     });
 }
 
-// Function to fetch and display persons
+// -------------------------
+// Fetch and Display Persons
+// -------------------------
+
 function fetchAndDisplayPersons() {
     fetch(personUrl)
         .then((response) => response.json())
@@ -98,7 +117,10 @@ function fetchAndDisplayPersons() {
         });
 }
 
-// Function to create a person item
+// ----------------- 
+// Create Person Item
+// ----------------- 
+
 function createPersonItem(person) {
     const personItem = document.createElement("div");
     personItem.innerHTML = `
@@ -111,17 +133,17 @@ function createPersonItem(person) {
         </ul>`;
     return personItem;
 }
-// Add event listeners to All Characters links
 
+// ----------------- 
+//  Display Quotes 
+// -----------------
 
-
-// Function to fetch and display quotes
 function fetchAndDisplayQuotes() {
     fetch(quoteUrl)
         .then((response) => response.json())
         .then((data) => {
-            console.log(data);
             const quoteList = document.querySelector("#quotes");
+            quoteList.innerHTML = "";
 
             data.forEach((quote) => {
                 const quoteItem = createQuoteItem(quote);
@@ -130,7 +152,10 @@ function fetchAndDisplayQuotes() {
         });
 }
 
-// Function to create a quote item
+// ---------------------
+// Display Random Quotes
+// ---------------------
+
 function createQuoteItem(quote) {
     const quoteItem = document.createElement("div");
     quoteItem.innerHTML = `
@@ -139,18 +164,26 @@ function createQuoteItem(quote) {
                 <h4>${quote.character.name}</h4>
                 <p><i class="fa-solid fa-quote-left"></i>${quote.sentence}<i class="fa-solid fa-quote-right"></i></p>
             </li>
-        </ul>`
+        </ul>`;
     return quoteItem;
 }
 
-// Function to display person details
+function displayRandomQuotes() {
+    fetchAndDisplayQuotes()
+}
+
+const btnRandom = document.querySelector("#btn-random");
+
+btnRandom.addEventListener("click", displayRandomQuotes);
+
+// ----------------------
+// Display Person Details 
+// ----------------------
 
 function displayPersonDetails(person) {
     fetch(personUrl)
         .then((response) => response.json())
         .then((data) => {
-            // DIsplay only the quotes of the selected person. The quotes are in the data array
-
             const personQuotes = data.filter(
                 (quote) => quote.slug === person.slug
             );
