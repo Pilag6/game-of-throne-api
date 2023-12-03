@@ -1,275 +1,76 @@
-<!-- Your Task
-Create a Single Page Application (SPA) that displays houses, people and quotes from the series Game
-of Thrones (GOT). The API https://api.gameofthronesquotes.xyz can be used for this. The following
-features should be implemented:
-- In the navigation area, the items "Houses", " Persons", "Quotes" should be present
-- A searchable list of all houses from GOT should be displayed under "Houses". If you click on the
-name of a house, the members of that house are displayed on a subpage.
-- A searchable list of all persons from GOT, including the associated house, should be displayed
-under "Persons". If you click on the name of a person, details about this person are displayed on
-a subpage (name, house, quotations).
-- Furthermore, there should be a button that replaces the list of quotations of this person with
-other quotations.
-- In the "Quotes" section, there is a list of five quotes by default. The user can use a button to
-replace this list with five other random quotes.
-- As there are references in the API to the other entities for all houses, persons and quotations,
-links to the respective entity should be included in the individual lists.
-- As a frontend developer you should put at least some effort to a nice look and feel. 
-
-Endpoints:
-
-GET /v1/author/{character}/{number} 
-=> i.e. https://api.gameofthronesquotes.xyz/v1/author/tyrion/2
-[
-    {
-        "sentence": "It's not easy being drunk all the time. Everyone would do it, if it were easy.",
-        "character": {
-            "name": "Tyrion Lannister",
-            "slug": "tyrion",
-            "house": {
-                "name": "House Lannister of Casterly Rock",
-                "slug": "lannister"
-            }
-        }
-    },
-    {
-        "sentence": "No matter who you are, no matter how strong you are, sooner or later, you’ll face circumstances beyond your control.",
-        "character": {
-            "name": "Tyrion Lannister",
-            "slug": "tyrion",
-            "house": {
-                "name": "House Lannister of Casterly Rock",
-                "slug": "lannister"
-            }
-        }
-    }
-]
-
-GET /v1/houses 
-=> https://api.gameofthronesquotes.xyz/v1/houses
-[
-    {
-        "slug": "stark",
-        "name": "House Stark of Winterfell",
-        "members": [
-            {"name": "Jon Snow", "slug": "jon"},
-            {"name": "Sansa Stark", "slug": "sansa"},
-            {"name": "Ned Stark", "slug": "ned"},
-            {"name": "Arya Stark", "slug": "arya"},
-            {"name": "Bran Stark", "slug": "bran"}
-        ]
-    },
-    {
-        "slug": "lannister",
-        "name": "House Lannister of Casterly Rock",
-        "members": [
-            {"name": "Jaime Lannister", "slug": "jaime"},
-            {"name": "Tyrion Lannister", "slug": "tyrion"},
-            {"name": "Cersei Lannister", "slug": "cersei"},
-            {"name": "Tywin Lannister", "slug": "tywin"}
-        ]
-    }
-]
-
-GET /v1/house/{name} 
-=> i.e. https://api.gameofthronesquotes.xyz/v1/houses/stark
-[
-    {
-        "slug": "stark",
-        "name": "House Stark of Winterfell",
-        "members": [
-            {"name": "Jon Snow", "slug": "jon"},
-            {"name": "Sansa Stark", "slug": "sansa"},
-            {"name": "Ned Stark", "slug": "ned"},
-            {"name": "Arya Stark", "slug": "arya"},
-            {"name": "Bran Stark", "slug": "bran"}
-        ]
-    }
-]
-
-GET /v1/characters
-=> https://api.gameofthronesquotes.xyz/v1/characters
-[
-    {
-        "name": "Jon Snow",
-        "slug": "jon",
-        "house": {
-            "slug": "stark",
-            "name": "House Stark of Winterfell"
-        },
-        "quotes": [
-            "If I fall, don't bring me back.",
-            "There is only one war that matters. The Great War. And it is here.",
-            "Love is the death of duty.",
-            "The war is not over. And I promise you, friend, the true enemy won’t wait out the storm. He brings the storm."
-        ]
-    },
-    {
-        "name": "Ned Stark",
-        "slug": "ned",
-        "house": {
-            "slug": "stark",
-            "name": "House Stark of Winterfell"
-        },
-        "quotes": [
-            "The man who passes the sentence should swing the sword.",
-            "I grew up with soldiers. I learned how to die a long time ago."
-        ]
-    }
-]
-
-GET /v1/character/{name}
-=> i.e. https://api.gameofthronesquotes.xyz/v1/character/tyrion
-[
-    {
-        "name": "Jon Snow",
-        "house": {
-            "slug": "stark",
-            "name": "House Stark of Winterfell"
-        },
-        "quotes": [
-            "If I fall, don't bring me back.",
-            "There is only one war that matters. The Great War. And it is here.",
-            "Love is the death of duty.",
-            "The war is not over. And I promise you, friend, the true enemy won’t wait out the storm. He brings the storm."
-        ]
-    }
-]
-
-How to find the diminutives of the houses and characters?
-The diminutives of houses and characters are present in the "slug" entry in the results.
-You can also find them in the datas.json file.
-
-For houses:
-
-"houses": {
-    "stark": {
-      "name": "House Stark of Winterfell"
-    },
-    "lannister": {
-      "name": "House Lannister of Casterly Rock"
-    },
-    "baratheon": {
-      "name": "House Baratheon of Dragonstone"
-    },
-    "targaryen": {
-      "name": "House Targaryen of King's Landing"
-    },
-    ...
-},
-The diminutives are: stark, lannister, baratheon, etc...
-
-For characters:
-
-"characters": {
-    "jon": {
-      "name": "Jon Snow",
-      "house": "stark"
-    },
-    "sansa": {
-      "name": "Sansa Stark",
-      "house": "stark"
-    },
-    "ned": {
-      "name": "Eddard \"Ned\" Stark",
-      "house": "stark"
-    },
-    "jaime": {
-      "name": "Jaime Lannister",
-      "house": "lannister"
-    },
-    "tyrion": {
-      "name": "Tyrion Lannister",
-      "house": "lannister"
-    },
-    ...
-},
-The diminutives are: jon, sansa, ned, etc...
-
--->
-
 <!DOCTYPE html>
 <html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Game of Thrones</title>
+        <link rel="stylesheet" href="style.css" />
 
-<head>
-    <meta charset="UTF-8" />
-    <title>Game of Thrones</title>
-    <link rel="stylesheet" href="style.css" />
+        <!-- Google Fonts   -->
 
-    <!-- Google Fonts   -->
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500;600;700;800&display=swap"
+            rel="stylesheet"
+        />
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500;600;700;800&display=swap"
-        rel="stylesheet">
+        <!-- Favicon  -->
 
-    <!-- Favicon  -->
+        <link
+            rel="shortcut icon"
+            href="./img/favicon.png"
+            type="image/x-icon"
+        />
 
-    <link rel="shortcut icon" href="./img/favicon.png" type="image/x-icon">
+        <!-- FontAwesom -->
 
-</head>
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+            integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"
+        />
+    </head>
 
-<body>
+    <body>
+        <div class="container">
+            <header>
+                <section>
+                    <div class="logo">
+                        <img
+                            src="https://upload.wikimedia.org/wikipedia/commons/b/b5/Logo_Game_of_Thrones.png"
+                            alt=""
+                        />
+                    </div>
+                    <nav>
+                        <ul>
+                            <li><a href="#houses">Houses</a></li>
+                            <li><a href="#persons">Persons</a></li>
+                            <li><a href="#quotes">Quotes</a></li>
+                        </ul>
+                    </nav>
+                </section>
+            </header>
 
-    <div class="container">
-        <header>
-            <section>
-                <div class="logo"><img
-                        src="https://upload.wikimedia.org/wikipedia/commons/b/b5/Logo_Game_of_Thrones.png" alt=""></div>
-                <nav>
-                    <ul>
-                        <li><a href="#houses">Houses</a></li>
-                        <li><a href="#persons">Persons</a></li>
-                        <li><a href="#quotes">Quotes</a></li>
-                    </ul>
-                </nav>
-            </section>
-        </header>
+            <main>
+                <section id="houses">
+                    <h2>Houses</h2>
+                    <ul class="houses-logos"></ul>
+                </section>
 
-        <main>
-            <section id="houses">
-                <h2>Houses</h2>
-                <!-- <input type="text" placeholder="Search..." /> -->
-                <ul class="houses-logos">
+                <section id="persons">
+                    <!-- <ul class="all-characters"></ul> -->
+                </section>
+            </main>
 
-                </ul>
-            </section>
+            <section id="person-details"></section>
 
-            <section id="persons">
-                <h2>Persons</h2>
-                <!-- <input type="text" placeholder="Search..." /> -->
-                <ul class="all-characters">
-
-                </ul>
-
-                
-            </section>
-        </main>
-
-        <div class="modal">
-            <div class="modal-content">
-                <span class="close">&times;</span>
-                <h2>Quotes</h2>
-                <ul class="quotes">
-
-                </ul>
-            </div>
+            <footer>
+                <p>© 2023 - Api Game of Thrones by Pila Gonzalez</p>
+            </footer>
         </div>
-
-        <footer>
-            <p>© 2023 - Api Game of Thrones by Pila Gonzalez</p>
-        </footer>
-
-
         <script type="module" src="./main.js"></script>
-
-        <script>
-            
-
-            // See all characters button
-
-
-        </script>
-</body>
-
+    </body>
 </html>
