@@ -444,21 +444,20 @@ main {
             gap: 20px;
 
             & img {
-                height: 400px;
+                height: 300px;
                 object-fit: contain;
             }
 
             & .person-quotes {
                 padding: 20px;
-
-                & h3 {
-                    font-size: 1.5rem;
-                    font-weight: 500;
-                    padding: 5px 10px;
-                    margin-bottom: 20px;
-                }
+                position: relative;
 
                 & ul {
+                    padding-right: 50px;
+                    font-size: 2rem;
+                    padding-top: 20px;
+                    padding-bottom: 80px;
+
                     & .fa-quote-left {
                         font-size: 1.5rem;
                         margin-right: 10px;
@@ -471,6 +470,9 @@ main {
                 }
 
                 & button {
+                    position: absolute;
+                    bottom: 60px;
+                    left: 20px;
                     color: #fff;
                     font-size: 1rem;
                     font-weight: 500;
@@ -488,7 +490,6 @@ main {
                     padding: 10px 20px;
                     transform: translateY(100%);
                     margin: 0 auto;
-                    margin-bottom: 70px;
                     cursor: pointer;
                     transition: all 0.4s ease-in-out;
 

@@ -179,7 +179,6 @@ function displayPersonDetails(person) {
                                 person.slug
                             }.jpg" alt="">
                             <div class="person-quotes">
-                                <h3>Quotes</h3>
                                 <ul>
                                 <i class="fa-solid fa-quote-left"></i>${
                                     personQuotes[0].quotes[
