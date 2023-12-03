@@ -75,6 +75,62 @@ function addHouseLinksEventListeners(data) {
     });
 }
 
+// -------------------------
+// Fetch and Display Persons
+// -------------------------
+
+function fetchAndDisplayPersons() {
+    fetch(personUrl)
+        .then((response) => response.json())
+        .then((data) => {
+            // console.log(data);
+            const personList = document.querySelector("#all-characters");
+
+            data.forEach((person) => {
+                const personItem = createPersonItem(person);
+                personList.appendChild(personItem);
+            });
+
+            addPersonLinksEventListeners(data);
+        });
+}
+
+// -----------------
+// Create Person Item
+// -----------------
+
+function createPersonItem(person) {
+    const personItem = document.createElement("div");
+    personItem.innerHTML = `
+        <ul>
+            <li style="background-image: url(./img/characters/${person.slug}.jpg)">
+                <a href="#${person.slug}" >
+                    ${person.name}
+                </a>
+            </li>
+        </ul>`;
+    return personItem;
+}
+
+// ----------------------------------
+// Add Event Listeners to Person Links
+// ----------------------------------
+
+function addPersonLinksEventListeners(data) {
+    const personLinks = document.querySelectorAll("#all-characters ul li a");
+    personLinks.forEach((link) => {
+        link.addEventListener("click", (event) => {
+            event.preventDefault();
+            const slug = link.getAttribute("href").slice(1);
+            // console.log(slug);
+            const person = data.find((person) => person.slug === slug);
+            console.log(person);
+            displayPersonDetails(person);
+        });
+    });
+}
+
+
 // -----------------
 // Display Persons
 // -----------------
@@ -99,23 +155,6 @@ function displayPersons(house) {
     });
 }
 
-// -------------------------
-// Fetch and Display Persons
-// -------------------------
-
-function fetchAndDisplayPersons() {
-    fetch(personUrl)
-        .then((response) => response.json())
-        .then((data) => {
-            // console.log(data);
-            const personList = document.querySelector("#all-characters");
-
-            data.forEach((person) => {
-                const personItem = createPersonItem(person);
-                personList.appendChild(personItem);
-            });
-        });
-}
 
 // ----------------------
 // Display Person Details
@@ -165,22 +204,6 @@ function displayPersonDetails(person) {
     });
 }
 
-// -----------------
-// Create Person Item
-// -----------------
-
-function createPersonItem(person) {
-    const personItem = document.createElement("div");
-    personItem.innerHTML = `
-        <ul>
-            <li style="background-image: url(./img/characters/${person.slug}.jpg)">
-                <a href="#${person.slug}" >
-                    ${person.name}
-                </a>
-            </li>
-        </ul>`;
-    return personItem;
-}
 
 // -----------------
 //  Display Quotes
