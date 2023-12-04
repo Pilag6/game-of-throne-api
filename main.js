@@ -223,9 +223,9 @@ function displayPersonDetails(person) {
     });
 }
 
-// -----------------
-//  Display Quotes
-// -----------------
+// -------------------------
+//  Fetch and Display Quotes
+// -------------------------
 
 function fetchAndDisplayQuotes() {
     fetch(quoteUrl)
@@ -242,7 +242,7 @@ function fetchAndDisplayQuotes() {
 }
 
 // ---------------------
-// Display Random Quotes
+// Create Quote Item
 // ---------------------
 
 function createQuoteItem(quote) {
@@ -265,11 +265,18 @@ function displayRandomQuotes() {
     fetchAndDisplayQuotes();
 }
 
+// ------------------------------------------
+// Add Event Listener to Random Quotes Button
+// ------------------------------------------
+
 const btnRandom = document.querySelector("#btn-random");
 
 btnRandom.addEventListener("click", displayRandomQuotes);
 
-// Initial function calls
+// ------------------------
+// Initial Fetch and Display
+// ------------------------
+
 fetchAndDisplayHouses();
 fetchAndDisplayPersons();
 fetchAndDisplayQuotes();
