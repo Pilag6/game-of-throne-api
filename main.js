@@ -104,7 +104,7 @@ function createPersonItem(person) {
     personItem.innerHTML = `
         <ul>
             <li style="background-image: url(./img/characters/${person.slug}.jpg)">
-                <a href="#${person.slug}" >
+                <a href="#${person.slug}">
                     ${person.name} 
                     <i class="fa-solid fa-square-arrow-up-right"></i>
                 </a>
